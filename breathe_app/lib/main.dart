@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               right: 0,
               child: AnimatedOpacity(
                 opacity: _opacity,
-                duration: Duration(seconds: 3),
+                duration: Duration(seconds: 2),
                 child: Text(
                   'Hello',
                   textAlign: TextAlign.center,
@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               right: 0,
               child: AnimatedOpacity(
                 opacity: _opacity,
-                duration: Duration(seconds: 8),
+                duration: Duration(seconds: 5),
                 child: Text(
                   "Let's start relaxing",
                   textAlign: TextAlign.center,
@@ -77,7 +77,31 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                       fontWeight: FontWeight.normal),
                 ),
               ),
-            )
+            ),
+            Positioned(
+              bottom: screenHeight * 0.1,
+              left: screenWidth * 0.38,
+              right: screenWidth * 0.38,
+              child: AnimatedOpacity(
+                  opacity: _opacity,
+                  duration: Duration(seconds: 7),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      side: BorderSide(
+                          color: Colors.white, width: screenWidth * 0.003),
+                      shape: StadiumBorder(),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      "Start",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: screenWidth * 0.05,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  )),
+            ),
           ],
         ),
       ),
