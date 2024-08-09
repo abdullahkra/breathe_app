@@ -11,8 +11,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Image.asset("assets/images/1.jpg"),
+        body: SizedBox.expand(
+          child: Image.asset(
+            "assets/images/1.jpg",
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
