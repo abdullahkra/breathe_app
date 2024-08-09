@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     _fadeInText();
   }
 
-//rusto
+//rusto21311231
   void _fadeInText() {
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
