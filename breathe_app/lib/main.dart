@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Stack(
           children: [
