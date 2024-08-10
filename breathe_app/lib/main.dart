@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -12,6 +11,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+//njxnjsjknkjck
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   double _opacity = 0.0;
   late AudioPlayer _audioPlayer;
@@ -24,11 +24,15 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     _fadeInText();
   }
 
+<<<<<<< HEAD
   void _playBackgroundMusic() async {
     await _audioPlayer.play(AssetSource('audio/rain_sound_1.mp3'), volume: 0.5);
   }
 
 //apollokapollo
+=======
+//apollokapollorusto
+>>>>>>> rustamov
   void _fadeInText() {
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
