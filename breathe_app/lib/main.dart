@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,11 +14,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   double _opacity = 0.0;
+  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
     super.initState();
+    _audioPlayer = AudioPlayer();
+    _playBackgroundMusic();
     _fadeInText();
+  }
+
+  void _playBackgroundMusic() async {
+    await _audioPlayer.play(AssetSource('audio/rain_sound_1.mp3'), volume: 0.5);
   }
 
 //apollokapollo
@@ -27,6 +35,12 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         _opacity = 1.0;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose(); // Bellek sızıntısını önlemek için
+    super.dispose();
   }
 
   @override
