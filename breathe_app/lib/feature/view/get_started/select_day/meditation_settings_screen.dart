@@ -2,7 +2,6 @@ import 'package:breathe_app/core/init/meditation_provider.dart';
 import 'package:breathe_app/feature/widget/day_selection_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class MeditationSettingsScreen extends StatelessWidget {
   @override
