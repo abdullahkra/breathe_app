@@ -2,7 +2,7 @@ import 'package:breathe_app/core/init/meditation_provider.dart';
 import 'package:breathe_app/feature/view/get_started/get_started_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() {
   runApp(MeditationApp());
