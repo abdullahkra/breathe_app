@@ -27,7 +27,5 @@ class MeditationProvider with ChangeNotifier {
     // Save settings to persistent storage
   }
 
-  void scheduleNotifications() {
-    // Schedule notifications based on the selected time and days
-  }
+  void scheduleDailyNotification(TimeOfDay newTime) {}
 }
