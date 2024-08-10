@@ -24,15 +24,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     _fadeInText();
   }
 
-<<<<<<< HEAD
   void _playBackgroundMusic() async {
     await _audioPlayer.play(AssetSource('audio/rain_sound_1.mp3'), volume: 0.5);
   }
 
 //apollokapollo
-=======
-//apollokapollorusto
->>>>>>> rustamov
   void _fadeInText() {
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
