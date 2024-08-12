@@ -17,7 +17,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
   void initState() {
     super.initState();
     _audioHelper = AudioHelper();
-    _audioHelper.playBackgroundMusic();
+    _audioHelper.playBackgroundMusic('audio/rain_sound_1.mp3');
     _fadeInText();
   }
 
@@ -31,7 +31,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
 
   @override
   void dispose() {
-    _audioHelper.dispose();
+    _audioHelper.dispose(); // Dispose çağrılacak
     super.dispose();
   }
 
