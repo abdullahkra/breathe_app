@@ -32,7 +32,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
   @override
   void dispose() {
     _audioHelper.dispose(); // Dispose çağrılacak
-    super.dispose();
+    super.dispose(); // Kaynakları serbest bırak
   }
 
   @override
