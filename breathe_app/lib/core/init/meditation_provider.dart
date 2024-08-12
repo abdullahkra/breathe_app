@@ -28,4 +28,6 @@ class MeditationProvider with ChangeNotifier {
   }
 
   void scheduleDailyNotification(TimeOfDay newTime) {}
+
+  void scheduleNotifications() {}
 }
