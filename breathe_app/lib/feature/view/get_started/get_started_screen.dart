@@ -3,13 +3,13 @@ import 'package:breathe_app/feature/view/select_day/meditation_settings_screen.d
 import 'package:breathe_app/feature/view/utils/audio_helper.dart';
 import 'package:flutter/material.dart';
 
-
 class GetStartedScreen extends StatefulWidget {
   @override
   _GetStartedScreenState createState() => _GetStartedScreenState();
 }
 
-class _GetStartedScreenState extends State<GetStartedScreen> with SingleTickerProviderStateMixin {
+class _GetStartedScreenState extends State<GetStartedScreen>
+    with SingleTickerProviderStateMixin {
   double _opacity = 0.0;
   late AudioHelper _audioHelper;
 
@@ -98,10 +98,12 @@ class _GetStartedScreenState extends State<GetStartedScreen> with SingleTickerPr
                         color: Colors.white, width: screenWidth * 0.003),
                     shape: StadiumBorder(),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await _audioHelper.stopBackgroundMusic();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MeditationSettingsScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => MeditationSettingsScreen()),
                     );
                   },
                   child: Text(
