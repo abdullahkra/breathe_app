@@ -3,6 +3,7 @@ import 'package:breathe_app/core/init/meditation_provider.dart';
 import 'package:breathe_app/feature/view/utils/audio_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:day_picker/day_picker.dart';
 
 class MeditationSettingsScreen extends StatefulWidget {
   @override
@@ -32,6 +33,11 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final provider = Provider.of<MeditationProvider>(context);
 
+    List<DayInWeek> _days = provider.days.map((day) {
+      return DayInWeek(day,
+          isSelected: provider.selectedDays.contains(day), dayKey: '');
+    }).toList();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -49,7 +55,7 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/2.jpg',
+              'assets/images/3.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -63,6 +69,31 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                       : 'No meditation time set',
                   style: TextStyle(
                       fontSize: screenWidth * 0.06, color: Colors.white),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                SizedBox(height: screenHeight * 0.09),
+                Padding(
+                  padding: EdgeInsets.all(screenWidth * 0.03),
+                  child: SelectWeekDays(
+                    fontSize: screenWidth * 0.0335,
+                    fontWeight: FontWeight.w500,
+                    days: _days,
+                    border: true,
+                    boxDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        colors: [
+                          Colors.transparent, // Şeffaf renk
+                          Colors.transparent, // Şeffaf renk
+                        ],
+                        tileMode: TileMode.repeated,
+                      ),
+                    ),
+                    onSelect: (values) {
+                      provider.setSelectedDays(values);
+                    },
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.25),
                 ElevatedButton(

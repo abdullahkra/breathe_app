@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:day_picker/day_picker.dart';
 
 class MeditationProvider with ChangeNotifier {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   TimeOfDay? _meditationTime;
   List<String> days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  Set<String> _selectedDays = {};
 
   MeditationProvider() {
     var initializationSettingsAndroid =
@@ -17,9 +19,15 @@ class MeditationProvider with ChangeNotifier {
   }
 
   TimeOfDay? get meditationTime => _meditationTime;
+  Set<String> get selectedDays => _selectedDays;
 
   void setMeditationTime(TimeOfDay time) {
     _meditationTime = time;
+    notifyListeners();
+  }
+
+  void setSelectedDays(List<String> days) {
+    _selectedDays = days.toSet();
     notifyListeners();
   }
 
