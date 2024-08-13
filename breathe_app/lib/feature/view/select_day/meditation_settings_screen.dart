@@ -1,9 +1,12 @@
-// lib/screens/meditation_settings_screen.dart
-import 'package:breathe_app/core/init/meditation_provider.dart';
-import 'package:breathe_app/feature/view/utils/audio_helper.dart';
+import 'package:breathe_app/feature/view/payment_page/payment_page.dart';
+import 'package:breathe_app/feature/widget/selectDaysWidget.dart';
+
+// Yeni widget import
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:day_picker/day_picker.dart';
+import 'package:breathe_app/core/init/meditation_provider.dart';
+import 'package:breathe_app/feature/view/utils/audio_helper.dart';
 
 class MeditationSettingsScreen extends StatefulWidget {
   @override
@@ -74,18 +77,17 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                 SizedBox(height: screenHeight * 0.09),
                 Padding(
                   padding: EdgeInsets.all(screenWidth * 0.03),
-                  child: SelectWeekDays(
+                  child: SelectDaysWidget(
                     fontSize: screenWidth * 0.0335,
                     fontWeight: FontWeight.w500,
                     days: _days,
-                    border: true,
                     boxDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.0),
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         colors: [
-                          Colors.transparent, // Şeffaf renk
-                          Colors.transparent, // Şeffaf renk
+                          Colors.transparent,
+                          Colors.transparent,
                         ],
                         tileMode: TileMode.repeated,
                       ),
@@ -110,7 +112,6 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                     );
                     if (newTime != null) {
                       provider.setMeditationTime(newTime);
-                      // Handle new time
                     }
                   },
                   child: Text(
@@ -130,7 +131,10 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                   ),
                   onPressed: () async {
                     await _audioHelper.stopBackgroundMusic();
-                    // Proceed to next screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PaymentPage()),
+                    );
                   },
                   child: Text(
                     'Next',
