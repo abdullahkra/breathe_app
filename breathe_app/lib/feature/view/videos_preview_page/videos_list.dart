@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           video: tempFile.path,
           imageFormat: ImageFormat.PNG,
           maxWidth:
-              (screenWidth * 0.9).toInt(), // Ekran genişliğine göre ayarlama
+              (screenWidth * 1).toInt(), // Ekran genişliğine göre ayarlama
           quality: 100, // Kaliteyi artırdık
         );
 
