@@ -114,7 +114,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 await _audioHelper.stopBackgroundMusic();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VideosPage()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
               child: Text(
