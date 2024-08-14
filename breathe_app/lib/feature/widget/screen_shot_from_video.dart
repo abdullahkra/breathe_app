@@ -29,16 +29,18 @@ class _VideoThumbnailPageState extends State<VideoThumbnailPage> {
     final fileName = widget.videoPath.split('/').last;
     final tempFile = File('${tempDir.path}/$fileName');
 
-    // Asset'tan geçici dosyaya kopyala
+    // Asset'ten geçici dosyaya kopyala
     final ByteData data = await rootBundle.load(widget.videoPath);
     final buffer = data.buffer.asUint8List();
     await tempFile.writeAsBytes(buffer);
 
+    final screenWidth = MediaQuery.of(context).size.width;
+
     final uint8list = await VideoThumbnail.thumbnailData(
       video: tempFile.path,
       imageFormat: ImageFormat.PNG,
-      maxWidth: 128,
-      quality: 25,
+      maxWidth: (screenWidth * 1).toInt(), // Ekran genişliğine göre ayarlama
+      quality: 100, // Kaliteyi artırdık
     );
 
     setState(() {

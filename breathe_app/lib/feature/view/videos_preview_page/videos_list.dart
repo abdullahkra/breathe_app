@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _generateThumbnails() async {
     final tempDir = await getTemporaryDirectory();
+    final screenWidth = MediaQuery.of(context).size.width;
 
     final videos = [
       {
@@ -41,17 +42,18 @@ class _HomePageState extends State<HomePage> {
       final fileName = videoUrl.split('/').last;
       final tempFile = File('${tempDir.path}/$fileName');
 
-      // Asset'tan geçici dosyaya kopyala
+      // Asset'ten geçici dosyaya kopyala
       final ByteData data = await rootBundle.load(videoUrl);
       final buffer = data.buffer.asUint8List();
       await tempFile.writeAsBytes(buffer);
 
       try {
         final thumbnailBytes = await VideoThumbnail.thumbnailData(
-          video: tempFile.path, // Geçici dosya yolunu kullan
+          video: tempFile.path,
           imageFormat: ImageFormat.PNG,
-          maxWidth: 128,
-          quality: 75,
+          maxWidth:
+              (screenWidth * 0.9).toInt(), // Ekran genişliğine göre ayarlama
+          quality: 100, // Kaliteyi artırdık
         );
 
         if (thumbnailBytes == null) {
