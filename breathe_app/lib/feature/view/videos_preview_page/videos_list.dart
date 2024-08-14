@@ -62,7 +62,7 @@ class PreviewGrid extends StatelessWidget {
           image: items[index]['image']!,
           title: items[index]['title']!,
           label: items[index]['label']!,
-          page: items[index]['page']!,
+          //page: items[index]['page']!,
         );
       },
     );
@@ -73,23 +73,23 @@ class PreviewCard extends StatelessWidget {
   final String image;
   final String title;
   final String label;
-  final Widget page;
+  //final Widget page;
 
   PreviewCard({
     required this.image,
     required this.title,
     required this.label,
-    required this.page,
+    //required this.page,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        /* Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => page),
-        );
+        ); */
       },
       child: Card(
         shape: RoundedRectangleBorder(

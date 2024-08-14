@@ -1,4 +1,5 @@
 import 'package:breathe_app/feature/view/utils/audio_helper.dart';
+import 'package:breathe_app/feature/view/videos_preview_page/videos_list.dart';
 import 'package:flutter/material.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -111,6 +112,10 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               onPressed: () async {
                 await _audioHelper.stopBackgroundMusic();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VideosPage()),
+                );
               },
               child: Text(
                 'No Thanks (Go Limited Free Version With Ads)',
