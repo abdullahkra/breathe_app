@@ -1,95 +1,136 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:breathe_app/feature/view/videos_preview_page/video_page.dart';
 
-void main() {
-  runApp(VideosPage());
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
 }
 
-class VideosPage extends StatelessWidget {
+class _HomePageState extends State<HomePage> {
+  List<Map<String, dynamic>> items = [];
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Önizleme Kartları'),
-        ),
-        body: PreviewGrid(),
-      ),
-    );
+  void initState() {
+    super.initState();
+    _generateThumbnails(); // Thumbnail'ları oluştur ve listeye ekle
   }
-}
 
-class PreviewGrid extends StatelessWidget {
-  final List<Map<String, dynamic>> items = [
-    {
-      'image': 'https://example.com/image1.jpg',
-      'title': 'Chistovodnaya River, Primorsky Krai',
-      'label': 'Free',
-      //'page': PageOne(), // Bu kart PageOne sayfasına yönlendirir
-    },
-    {
-      'image': 'https://example.com/image2.jpg',
-      'title': 'Petrov Island, Primorsky Krai',
-      'label': 'PRO',
-      //'page': PageTwo(), // Bu kart PageTwo sayfasına yönlendirir
-    },
-    {
-      'image': 'https://example.com/image3.jpg',
-      'title': 'Petrov Island, Primorsky Krai',
-      'label': 'Free',
-      //'page': PageThree(), // Bu kart PageThree sayfasına yönlendirir
-    },
-    {
-      'image': 'https://example.com/image4.jpg',
-      'title': 'Cape of Four Cliffs, Primorsky Krai',
-      'label': 'PRO',
-      //'page': PageFour(), // Bu kart PageFour sayfasına yönlendirir
-    },
-    // Daha fazla öğe ekleyin
-  ];
+  Future<void> _generateThumbnails() async {
+    final tempDir = await getTemporaryDirectory();
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final videos = [
+      {
+        'videoUrl': 'assets/videos/video1.mp4',
+        'title': 'Chistovodnaya River, Primorsky Krai',
+        'label': 'Free',
+      },
+      {
+        'videoUrl': 'assets/videos/video1.mp4',
+        'title': 'Petrov Island, Primorsky Krai',
+        'label': 'PRO',
+      },
+    ];
+
+    for (var video in videos) {
+      final videoUrl = video['videoUrl'] as String? ?? '';
+      final fileName = videoUrl.split('/').last;
+      final tempFile = File('${tempDir.path}/$fileName');
+
+      // Asset'ten geçici dosyaya kopyala
+      final ByteData data = await rootBundle.load(videoUrl);
+      final buffer = data.buffer.asUint8List();
+      await tempFile.writeAsBytes(buffer);
+
+      try {
+        final thumbnailBytes = await VideoThumbnail.thumbnailData(
+          video: tempFile.path,
+          imageFormat: ImageFormat.PNG,
+          maxWidth:
+              (screenWidth * 0.9).toInt(), // Ekran genişliğine göre ayarlama
+          quality: 100, // Kaliteyi artırdık
+        );
+
+        if (thumbnailBytes == null) {
+          print('Thumbnail oluşturulamadı: $videoUrl');
+        }
+
+        setState(() {
+          items.add({
+            'image': thumbnailBytes!,
+            'title': video['title'],
+            'label': video['label'],
+            'page': VideoPage(
+              videoUrl: video['videoUrl']!,
+              title: video['title']!,
+            ),
+          });
+        });
+      } catch (e) {
+        print('Hata: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // İki sütunlu bir grid
-        crossAxisSpacing: 8.0,
-        mainAxisSpacing: 8.0,
-        childAspectRatio: 0.7, // Kartların boyut oranı
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Breathe with Nature'),
       ),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return PreviewCard(
-          image: items[index]['image']!,
-          title: items[index]['title']!,
-          label: items[index]['label']!,
-          //page: items[index]['page']!,
-        );
-      },
+      body: items.isEmpty
+          ? Center(
+              child:
+                  CircularProgressIndicator(), // Thumbnail'lar oluşturulurken gösterilecek
+            )
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // İki sütunlu bir grid
+                crossAxisSpacing: 8.0,
+                mainAxisSpacing: 8.0,
+                childAspectRatio: 0.7, // Kartların boyut oranı
+              ),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return PreviewCard(
+                  imageBytes: items[index]['image']!,
+                  title: items[index]['title']!,
+                  label: items[index]['label']!,
+                  page: items[index]['page']!,
+                );
+              },
+            ),
     );
   }
 }
 
 class PreviewCard extends StatelessWidget {
-  final String image;
+  final Uint8List imageBytes;
   final String title;
   final String label;
-  //final Widget page;
+  final Widget page;
 
   PreviewCard({
-    required this.image,
+    required this.imageBytes,
     required this.title,
     required this.label,
-    //required this.page,
+    required this.page,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        /* Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => page),
-        ); */
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -99,8 +140,8 @@ class PreviewCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
-              child: Image.network(
-                image,
+              child: Image.memory(
+                imageBytes,
                 width: double.infinity,
                 height: double.infinity,
                 fit: BoxFit.cover,
