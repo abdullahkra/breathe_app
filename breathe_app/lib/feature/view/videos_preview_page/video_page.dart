@@ -23,10 +23,19 @@ class _VideoPageState extends State<VideoPage> {
         _controller.play(); // Video otomatik olarak oynatılır.
         _controller.setLooping(true); // Videoyu döngüde tut
       });
+
+    // Döngü sırasında kesinti olmaması için bir listener ekleyin
+    _controller.addListener(() {
+      if (_controller.value.position == _controller.value.duration) {
+        _controller.seekTo(Duration.zero);
+        _controller.play(); // Tekrar başlat
+      }
+    });
   }
 
   @override
   void dispose() {
+    _controller.removeListener(() {}); // Dinleyiciyi kaldırın
     _controller.dispose();
     super.dispose();
   }
