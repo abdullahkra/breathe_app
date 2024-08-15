@@ -17,6 +17,7 @@ class _VideoPageState extends State<VideoPage> {
   Timer? _timer;
   int _seconds = 0;
   bool _isTimerRunning = false;
+  bool _isMuted = false;
 
   @override
   void initState() {
@@ -60,6 +61,13 @@ class _VideoPageState extends State<VideoPage> {
     });
   }
 
+  void _toggleMute() {
+    setState(() {
+      _isMuted = !_isMuted;
+      _controller.setVolume(_isMuted ? 0.0 : 1.0);
+    });
+  }
+
   String _formatTime(int seconds) {
     final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
     final secs = (seconds % 60).toString().padLeft(2, '0');
@@ -70,6 +78,15 @@ class _VideoPageState extends State<VideoPage> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final buttonSize =
+        screenWidth * 0.1; // Buton boyutunu ekran genişliğine göre ayarlama
+    final iconSize =
+        buttonSize * 0.5; // İkon boyutunu buton boyutuna göre ayarlama
+    final timerSize =
+        screenWidth * 0.4; // Timer boyutunu ekran genişliğine göre ayarlama
+    final timerFontSize =
+        timerSize * 0.2; // Timer font boyutunu timer boyutuna göre ayarlama
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -88,15 +105,56 @@ class _VideoPageState extends State<VideoPage> {
                   ),
                 )
               : Center(child: CircularProgressIndicator()),
+          Positioned(
+            top: screenHeight * 0.05,
+            left: screenWidth * 0.05,
+            child: Container(
+              width: buttonSize,
+              height: buttonSize,
+              decoration: BoxDecoration(
+                color: Colors.black
+                    .withOpacity(0.5), // Arka plan rengini ayarlayın
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon:
+                    Icon(Icons.arrow_back, color: Colors.white, size: iconSize),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            top: screenHeight * 0.05,
+            right: screenWidth * 0.05,
+            child: Container(
+              width: buttonSize,
+              height: buttonSize,
+              decoration: BoxDecoration(
+                color: Colors.black
+                    .withOpacity(0.5), // Arka plan rengini ayarlayın
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: Icon(
+                  _isMuted ? Icons.volume_off : Icons.volume_up,
+                  color: Colors.white,
+                  size: iconSize,
+                ),
+                onPressed: _toggleMute,
+              ),
+            ),
+          ),
           Center(
             child: GestureDetector(
               onTap: _toggleTimer,
               child: Container(
-                width: screenWidth * 0.4,
-                height: screenHeight * 0.4,
+                width: timerSize,
+                height: timerSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.transparent,
+                  color: Colors.black.withOpacity(0.5),
                   border: Border.all(
                       color: Colors.white, width: screenWidth * 0.01),
                 ),
@@ -104,9 +162,8 @@ class _VideoPageState extends State<VideoPage> {
                 child: Text(
                   _formatTime(_seconds),
                   style: TextStyle(
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    backgroundColor: const Color.fromARGB(90, 0, 0, 0),
-                    fontSize: screenWidth * 0.07,
+                    color: Colors.white,
+                    fontSize: timerFontSize,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
