@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -27,18 +26,23 @@ class _HomePageState extends State<HomePage> {
     final videos = [
       {
         'videoUrl': 'assets/videos/video1.mp4',
-        'title': 'Chistovodnaya River, Primorsky Krai',
+        'title': 'Waterfall',
         'label': 'Free',
       },
       {
-        'videoUrl': 'assets/videos/video1.mp4',
-        'title': 'Petrov Island, Primorsky Krai',
+        'videoUrl': 'assets/videos/forest1.mp4',
+        'title': 'Forest',
         'label': 'PRO',
+      },
+      {
+        'videoUrl': 'assets/videos/lake1.mp4',
+        'title': 'Lake',
+        'label': 'Free',
       },
     ];
 
     for (var video in videos) {
-      final videoUrl = video['videoUrl'] as String? ?? '';
+      final videoUrl = video['videoUrl'] ?? '';
       final fileName = videoUrl.split('/').last;
       final tempFile = File('${tempDir.path}/$fileName');
 
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         );
 
         if (thumbnailBytes == null) {
-          print('Thumbnail oluşturulamadı: $videoUrl');
+          print('Thumbnail oluşturulamadi: $videoUrl');
         }
 
         setState(() {
