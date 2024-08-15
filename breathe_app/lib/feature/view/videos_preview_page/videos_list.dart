@@ -39,6 +39,11 @@ class _HomePageState extends State<HomePage> {
         'title': 'Lake',
         'label': 'Free',
       },
+      {
+        'videoUrl': 'assets/videos/seawave1.mp4',
+        'title': 'Sea',
+        'label': 'Free',
+      },
     ];
 
     for (var video in videos) {
