@@ -88,6 +88,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -101,8 +103,8 @@ class _HomePageState extends State<HomePage> {
           : GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, // İki sütunlu bir grid
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
+                crossAxisSpacing: screenWidth * 0.04,
+                mainAxisSpacing: screenHeight * 0.03,
                 childAspectRatio: 0.7, // Kartların boyut oranı
               ),
               itemCount: items.length,
