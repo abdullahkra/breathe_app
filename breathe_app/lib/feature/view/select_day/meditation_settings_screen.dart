@@ -1,7 +1,6 @@
 import 'package:breathe_app/feature/view/payment_page/payment_page.dart';
+import 'package:breathe_app/feature/view/videos_preview_page/videos_list.dart';
 import 'package:breathe_app/feature/widget/selectDaysWidget.dart';
-
-// Yeni widget import
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:day_picker/day_picker.dart';
@@ -9,6 +8,11 @@ import 'package:breathe_app/core/init/meditation_provider.dart';
 import 'package:breathe_app/feature/view/utils/audio_helper.dart';
 
 class MeditationSettingsScreen extends StatefulWidget {
+  final bool isFromSettings; // Yeni parametre
+
+  const MeditationSettingsScreen({Key? key, this.isFromSettings = false})
+      : super(key: key);
+
   @override
   State<MeditationSettingsScreen> createState() =>
       _MeditationSettingsScreenState();
@@ -26,7 +30,7 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
 
   @override
   void dispose() {
-    _audioHelper.dispose(); // Dispose çağrılacak
+    _audioHelper.dispose();
     super.dispose();
   }
 
@@ -131,13 +135,22 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                   ),
                   onPressed: () async {
                     await _audioHelper.stopBackgroundMusic();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PaymentPage()),
-                    );
+                    if (widget.isFromSettings) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideosListPage()),
+                        (Route<dynamic> route) => false,
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PaymentPage()),
+                      );
+                    }
                   },
                   child: Text(
-                    'Next',
+                    widget.isFromSettings ? 'Save' : 'Next',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: screenWidth * 0.04,

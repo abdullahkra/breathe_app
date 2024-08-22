@@ -1,16 +1,17 @@
 import 'dart:io';
+import 'package:breathe_app/feature/view/settings_page/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:breathe_app/feature/view/videos_preview_page/video_page.dart';
 
-class HomePage extends StatefulWidget {
+class VideosListPage extends StatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<VideosListPage> createState() => _VideosListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _VideosListPageState extends State<VideosListPage> {
   List<Map<String, dynamic>> items = [];
 
   @override
@@ -94,6 +95,17 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Breathe with Nature'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: items.isEmpty
           ? Center(
