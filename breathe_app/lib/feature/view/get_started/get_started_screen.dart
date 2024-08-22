@@ -22,11 +22,16 @@ class _GetStartedScreenState extends State<GetStartedScreen>
   }
 
   void _fadeInText() {
-    Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        _opacity = 1.0;
-      });
-    });
+    Future.delayed(
+      Duration(seconds: 2),
+      () {
+        setState(
+          () {
+            _opacity = 1.0;
+          },
+        );
+      },
+    );
   }
 
   @override
