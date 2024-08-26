@@ -1,6 +1,7 @@
 import 'package:breathe_app/feature/view/utils/audio_helper.dart';
 import 'package:breathe_app/feature/view/videos_preview_page/videos_list.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -11,6 +12,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   late AudioHelper _audioHelper;
+
   @override
   void initState() {
     super.initState();
@@ -20,8 +22,13 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   void dispose() {
-    _audioHelper.dispose(); // Dispose çağrılacak
+    _audioHelper.dispose();
     super.dispose();
+  }
+
+  Future<void> _completeSetup() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('initialSetupComplete', true);
   }
 
   @override
@@ -96,9 +103,6 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             ),
           ),
-          /* SizedBox(
-            height: screenHeight * 0.5,
-          ) */
           Positioned(
             bottom: screenHeight * 0.15,
             left: 0,
@@ -112,6 +116,7 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               onPressed: () async {
                 await _audioHelper.stopBackgroundMusic();
+                await _completeSetup(); // Setup tamamlandığında bu metodu çağırıyoruz
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => VideosListPage()),
