@@ -1,6 +1,6 @@
 import 'package:breathe_app/feature/view/payment_page/payment_page.dart';
 import 'package:breathe_app/feature/view/videos_preview_page/videos_list.dart';
-import 'package:breathe_app/feature/widget/selectDaysWidget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:day_picker/day_picker.dart';
@@ -79,28 +79,6 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                 ),
                 SizedBox(height: screenHeight * 0.02),
                 SizedBox(height: screenHeight * 0.09),
-                Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.03),
-                  child: SelectDaysWidget(
-                    fontSize: screenWidth * 0.0335,
-                    fontWeight: FontWeight.w500,
-                    days: _days,
-                    boxDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        colors: [
-                          Colors.transparent,
-                          Colors.transparent,
-                        ],
-                        tileMode: TileMode.repeated,
-                      ),
-                    ),
-                    onSelect: (values) {
-                      provider.setSelectedDays(values);
-                    },
-                  ),
-                ),
                 SizedBox(height: screenHeight * 0.25),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
