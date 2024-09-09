@@ -45,6 +45,7 @@ dependencies:
   day_night_time_picker: ^1.3.1
   day_picker: ^2.2.0
   countdown_progress_indicator: ^0.1.2
+  timezone: ^0.9.4
 
 dev_dependencies:
   flutter_test:

@@ -82,33 +82,28 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                 Padding(
                   padding: EdgeInsets.all(screenWidth * 0.03),
                   child: SelectDaysWidget(
-                    fontSize: screenWidth * 0.0335,
-                    fontWeight: FontWeight.w500,
-                    days: _days,
-                    boxDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        colors: [
-                          Colors.transparent,
-                          Colors.transparent,
-                        ],
-                        tileMode: TileMode.repeated,
+                      fontSize: screenWidth * 0.0335,
+                      fontWeight: FontWeight.w500,
+                      days: _days,
+                      boxDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          colors: [
+                            Colors.transparent,
+                            Colors.transparent,
+                          ],
+                          tileMode: TileMode.repeated,
+                        ),
                       ),
-                    ),
-                    onSelect: (values) {
-                      provider.setSelectedDays(values);
-                    },
-                  ),
+                      onSelect: (values) {
+                        if (values.isNotEmpty) {
+                          provider.setSelectedDays(values);
+                        }
+                      }),
                 ),
                 SizedBox(height: screenHeight * 0.25),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    side: BorderSide(
-                        color: Colors.white, width: screenWidth * 0.003),
-                    shape: StadiumBorder(),
-                  ),
                   onPressed: () async {
                     TimeOfDay? newTime = await showTimePicker(
                       context: context,
@@ -116,6 +111,8 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                     );
                     if (newTime != null) {
                       provider.setMeditationTime(newTime);
+                      provider
+                          .scheduleDailyNotification(); // Bildirimleri planla
                     }
                   },
                   child: Text(
