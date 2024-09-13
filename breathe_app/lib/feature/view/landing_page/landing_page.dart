@@ -1,8 +1,7 @@
+import 'package:breathe_app/feature/view/get_started/get_started_screen.dart';
+import 'package:breathe_app/feature/view/videos_preview_page/videos_list.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../get_started/get_started_screen.dart';
-import '../videos_preview_page/videos_list.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -39,16 +38,11 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    /* final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width; */
     return Scaffold(
       body: Center(
         child: ClipOval(
-          child: Image.asset(
-            'assets/images/Breathe.png',
-            fit: BoxFit.cover,
-          ), // Uygulama logosunu buraya koyabilirsiniz
-        ),
+          child: Image.asset('assets/images/Breathe.png'),
+        ), // Uygulama logosu olarak logo_2.png kullanılıyor
       ),
     );
   }
