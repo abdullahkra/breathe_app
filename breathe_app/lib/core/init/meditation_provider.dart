@@ -1,24 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class MeditationProvider with ChangeNotifier {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
   TimeOfDay? _meditationTime;
   List<String> days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   Set<String> _selectedDays = {};
+  String? _fcmToken;
 
   MeditationProvider() {
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = DarwinInitializationSettings();
-    var initializationSettings = InitializationSettings(
-        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    _initializeFirebaseMessaging();
   }
 
   TimeOfDay? get meditationTime => _meditationTime;
   Set<String> get selectedDays => _selectedDays;
+  String? get fcmToken => _fcmToken;
+
+  // Firebase Messaging'i başlatma ve token alma
+  void _initializeFirebaseMessaging() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    // FCM token al
+    messaging.getToken().then((token) {
+      _fcmToken = token;
+      print("FCM Token: $token");
+      notifyListeners();
+    });
+
+    // Mesaj dinleyicileri
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Message data: ${message.data}');
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+    });
+  }
 
   void setMeditationTime(TimeOfDay time) {
     _meditationTime = time;
@@ -31,10 +50,11 @@ class MeditationProvider with ChangeNotifier {
   }
 
   void saveSettings() {
-    // Save settings to persistent storage
+    // Kullanıcı ayarlarını kaydetmek için kullanılacak
   }
 
-  void scheduleDailyNotification(TimeOfDay newTime) {}
-
-  void scheduleNotifications() {}
+  // Firebase Cloud Functions ile push notification tetiklemek için kullanılabilir
+  void scheduleNotifications() {
+    // Seçilen gün ve saate göre Firebase'e push notification talebi yapılabilir.
+  }
 }
