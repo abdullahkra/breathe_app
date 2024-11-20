@@ -6,7 +6,7 @@ class VideoPage extends StatefulWidget {
   final String videoUrl;
   final String title;
 
-  VideoPage({required this.videoUrl, required this.title});
+  const VideoPage({super.key, required this.videoUrl, required this.title});
 
   @override
   _VideoPageState createState() => _VideoPageState();
@@ -92,7 +92,7 @@ class _VideoPageState extends State<VideoPage> {
       body: Stack(
         children: [
           _controller.value.isInitialized
-              ? Container(
+              ? SizedBox(
                   width: double.infinity,
                   height: double.infinity,
                   child: FittedBox(

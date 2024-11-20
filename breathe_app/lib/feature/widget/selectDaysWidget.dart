@@ -9,6 +9,7 @@ class SelectDaysWidget extends StatelessWidget {
   final BoxDecoration boxDecoration;
 
   const SelectDaysWidget({
+    super.key,
     required this.days,
     required this.onSelect,
     required this.fontSize,

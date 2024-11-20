@@ -2,6 +2,8 @@ import 'package:breathe_app/feature/view/select_day/meditation_settings_screen.d
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPage extends StatefulWidget {
+  const LandingPage({super.key});
+
   @override
   _LandingPageState createState() => _LandingPageState();
 }

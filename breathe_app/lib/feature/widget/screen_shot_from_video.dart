@@ -8,7 +8,8 @@ class VideoThumbnailPage extends StatefulWidget {
   final String videoPath; // Asset veya dosya yolunu belirt
   final String title;
 
-  VideoThumbnailPage({required this.videoPath, required this.title});
+  const VideoThumbnailPage(
+      {super.key, required this.videoPath, required this.title});
 
   @override
   _VideoThumbnailPageState createState() => _VideoThumbnailPageState();

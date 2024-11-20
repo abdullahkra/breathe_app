@@ -4,6 +4,8 @@ import 'package:breathe_app/feature/view/utils/audio_helper.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedScreen extends StatefulWidget {
+  const GetStartedScreen({super.key});
+
   @override
   _GetStartedScreenState createState() => _GetStartedScreenState();
 }

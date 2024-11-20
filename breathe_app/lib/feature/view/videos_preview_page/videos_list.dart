@@ -7,6 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:breathe_app/feature/view/videos_preview_page/video_page.dart';
 
 class VideosListPage extends StatefulWidget {
+  const VideosListPage({super.key});
+
   @override
   State<VideosListPage> createState() => _VideosListPageState();
 }
@@ -139,7 +141,8 @@ class PreviewCard extends StatelessWidget {
   final String label;
   final Widget page;
 
-  PreviewCard({
+  const PreviewCard({
+    super.key,
     required this.imageBytes,
     required this.title,
     required this.label,
@@ -198,7 +201,7 @@ class PreviewCard extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
-                    shadows: [
+                    shadows: const [
                       Shadow(
                         offset: Offset(0.0, 0.0),
                         blurRadius: 6.0,

@@ -10,8 +10,7 @@ import 'package:breathe_app/feature/view/utils/audio_helper.dart';
 class MeditationSettingsScreen extends StatefulWidget {
   final bool isFromSettings; // Yeni parametre
 
-  const MeditationSettingsScreen({Key? key, this.isFromSettings = false})
-      : super(key: key);
+  const MeditationSettingsScreen({super.key, this.isFromSettings = false});
 
   @override
   State<MeditationSettingsScreen> createState() =>
@@ -40,7 +39,7 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final provider = Provider.of<MeditationProvider>(context);
 
-    List<DayInWeek> _days = provider.days.map((day) {
+    List<DayInWeek> days = provider.days.map((day) {
       return DayInWeek(day,
           isSelected: provider.selectedDays.contains(day), dayKey: '');
     }).toList();
@@ -84,12 +83,12 @@ class _MeditationSettingsScreenState extends State<MeditationSettingsScreen> {
                   child: SelectDaysWidget(
                     fontSize: screenWidth * 0.0335,
                     fontWeight: FontWeight.w500,
-                    days: _days,
+                    days: days,
                     boxDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.0),
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
-                        colors: [
+                        colors: const [
                           Colors.transparent,
                           Colors.transparent,
                         ],
