@@ -11,12 +11,12 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_21
-        targetCompatibility JavaVersion.VERSION_21
+        sourceCompatibility JavaVersion.VERSION_17 // Güncellendi
+        targetCompatibility JavaVersion.VERSION_17 // Güncellendi
     }
 
     kotlinOptions {
-        jvmTarget = "21"  // Burayı Java 17 ile uyumlu hale getirin
+        jvmTarget = "17"  // Java 17 ile uyumlu hale getirildi
     }
 
     defaultConfig {
@@ -33,7 +33,6 @@ android {
         }
     }
 }
-
 
 flutter {
     source = "../.."
